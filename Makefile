@@ -1,8 +1,8 @@
 SRCS = $(shell find src -type f -name '*.cpp' -o -name '*.c')
 OBJS = $(addsuffix .o,$(basename $(SRCS)))
-CXX = g++
-CC = gcc
-AR = ar
+CXX := g++
+CC := gcc
+AR := ar
 CFLAGS = -O2 -w -Werror -Wno-unused -fPIC -g -I. -Isrc/
 ifeq ($(OS),Windows_NT)
     CFLAGS += -D WIN32
@@ -17,10 +17,7 @@ ifeq ($(OS),Windows_NT)
         endif
     endif
 else
-		CFLAGS += -nostdlib
     #add support for the exceptions/ directory
-		SRCS += $(shell find exceptions -type f -name '*.cpp' -o -name '*.c')
-		OBJS = $(addsuffix .o,$(basename $(SRCS)))
     UNAME_S := $(shell uname -s)
     ifeq ($(UNAME_S),Linux)
         CFLAGS += -D LINUX
@@ -30,6 +27,8 @@ else
     endif
 		ifeq ($(UNAME_S),FreeBSD)
 		    CFLAGS += -D FREEBSD
+				CXX := g++6
+				CC := gcc6
 		endif
     UNAME_P := $(shell uname -p)
     ifeq ($(UNAME_P),x86_64)
